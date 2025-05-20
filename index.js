@@ -29,7 +29,7 @@ const express = require('express');
   });
 
   // Connect to MongoDB
-  mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/Project')
+  mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.error('MongoDB connection error:', err));
 
@@ -57,7 +57,7 @@ const express = require('express');
       sameSite: true
     },
     store: MongoStore.create({
-      mongoUrl: process.env.MONGODB_URI || 'mongodb://localhost:27017/Project'
+      mongoUrl: process.env.MONGO_URI
     })
   }));
 
@@ -219,3 +219,4 @@ app.use('/api/requests', ordersRouter);
   server.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
   });
+  console.log('Loaded MONGO_URI:', process.env.MONGO_URI);
