@@ -47,20 +47,20 @@ const express = require('express');
   app.use(bodyParser.json());
 
   // Session configuration
-  app.use(session({
-    secret: process.env.SESSION_SECRET || '123',
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      maxAge: 24 * 60 * 60 * 1000,
-      secure: process.env.NODE_ENV === 'false',
-      httpOnly: true,
-      sameSite: true
-    },
-    store: MongoStore.create({
-      mongoUrl: process.env.MONGO_URI
-    })
-  }));
+app.use(session({
+  secret: process.env.SESSION_SECRET || '123',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 24 * 60 * 60 * 1000,
+    secure: process.env.NODE_ENV === 'production', // Ensure cookies are secure in production
+    httpOnly: true,
+    sameSite: 'none' // Important for cross-origin requests
+  },
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGO_URI
+  })
+}));
 app.get('/', (req, res) => {
   res.send('PaaniHub backend is running on Railway!');
 });
