@@ -22,7 +22,7 @@ const express = require('express');
   // Create an HTTP server
   const io = new Server(server, {
     cors: {
-      origin: process.env.FRONTEND_URL || 'https://pani-hub.vercel.app/', // Frontend URL
+      origin: process.env.FRONTEND_URL || 'https://pani-hub.vercel.app', // Frontend URL
      methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
       credentials: true
@@ -36,7 +36,7 @@ const express = require('express');
 
   // Configure CORS
   app.use(cors({
-    origin: process.env.FRONTEND_URL || 'https://pani-hub.vercel.app/',
+    origin: process.env.FRONTEND_URL || 'https://pani-hub.vercel.app',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
