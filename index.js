@@ -36,12 +36,12 @@ const express = require('express');
 app.set('trust proxy', 1); // trust Railway/Vercel proxy
 
   // Configure CORS
-  app.use(cors({
-    origin: process.env.FRONTEND_URL || 'https://pani-hub.vercel.app',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true
-  }));
+ app.use(cors({
+  origin: 'https://pani-hub.vercel.app', // Must match Vercel frontend exactly
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE']
+}));
+
 
   // Middleware to parse incoming request bodies
   app.use(bodyParser.urlencoded({ extended: true }));
@@ -52,15 +52,13 @@ app.use(session({
   secret: process.env.SESSION_SECRET || '123',
   resave: false,
   saveUninitialized: false,
+  store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
   cookie: {
     maxAge: 24 * 60 * 60 * 1000,
-    secure: true,         // required for HTTPS
     httpOnly: true,
-    sameSite: 'none'      // must be 'none' to allow cross-site cookies
-  },
-  store: MongoStore.create({
-    mongoUrl: process.env.MONGO_URI
-  })
+    secure: true, // Must be true for Railway/Vercel HTTPS
+    sameSite: 'none' // REQUIRED for cross-site cookie sharing
+  }
 }));
 
 app.get('/', (req, res) => {
