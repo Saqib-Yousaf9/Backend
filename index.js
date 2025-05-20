@@ -33,6 +33,7 @@ const express = require('express');
   mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.error('MongoDB connection error:', err));
+app.set('trust proxy', 1); // trust Railway/Vercel proxy
 
   // Configure CORS
   app.use(cors({
