@@ -60,6 +60,9 @@ const express = require('express');
       mongoUrl: process.env.MONGO_URI
     })
   }));
+app.get('/', (req, res) => {
+  res.send('PaaniHub backend is running on Railway!');
+});
 
   // // Use employee routes
   app.use('/api/employee', employeeRoutes);
