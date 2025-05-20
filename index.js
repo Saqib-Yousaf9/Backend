@@ -54,14 +54,15 @@ app.use(session({
   saveUninitialized: false,
   cookie: {
     maxAge: 24 * 60 * 60 * 1000,
-    secure: true,             // ✅ required for HTTPS
+    secure: true,         // required for HTTPS
     httpOnly: true,
-    sameSite: 'none' // Important for cross-origin requests
+    sameSite: 'none'      // must be 'none' to allow cross-site cookies
   },
   store: MongoStore.create({
     mongoUrl: process.env.MONGO_URI
   })
 }));
+
 app.get('/', (req, res) => {
   res.send('PaaniHub backend is running on Railway!');
 });
